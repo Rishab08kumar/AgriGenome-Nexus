@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #0a0f0a;
+  color: #e0ffe0;
+  font-family: 'Space Grotesk', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Custom Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0a0f0a; }
+::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,255,136,0.7); }
+
+/* ── Glassmorphism ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  .glass-card {
+    background: rgba(0, 255, 136, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 255, 136, 0.12);
+  }
+
+  .glass-card-blue {
+    background: rgba(0, 180, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 180, 255, 0.15);
+  }
+
+  .neon-border {
+    border: 1px solid #00ff88 !important;
+    box-shadow: 0 0 8px rgba(0,255,136,0.4), inset 0 0 8px rgba(0,255,136,0.1);
+  }
+
+  .neon-border-blue {
+    border: 1px solid #00b4ff !important;
+    box-shadow: 0 0 8px rgba(0,180,255,0.4), inset 0 0 8px rgba(0,180,255,0.1);
+  }
+
+  .neon-border-gold {
+    border: 1px solid #ffd700 !important;
+    box-shadow: 0 0 8px rgba(255,215,0,0.4), inset 0 0 8px rgba(255,215,0,0.1);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 12px rgba(0,255,136,0.8), 0 0 24px rgba(0,255,136,0.4);
+  }
+
+  .glow-text-gold {
+    text-shadow: 0 0 12px rgba(255,215,0,0.8), 0 0 24px rgba(255,215,0,0.4);
+  }
+
+  .glow-text-blue {
+    text-shadow: 0 0 12px rgba(0,180,255,0.8), 0 0 24px rgba(0,180,255,0.4);
+  }
+
+  /* 3D card perspective helper */
+  .perspective-card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  /* Shimmer gradient sweep */
+  .shimmer-bg {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0,255,136,0.06) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Scan line overlay */
+  .scan-overlay {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,136,0.015) 2px,
+      rgba(0,255,136,0.015) 4px
+    );
+    pointer-events: none;
+  }
+}
+
+/* ── Keyframe Animations ───────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,255,136,0.4); }
+  50%       { box-shadow: 0 0 25px rgba(0,255,136,0.8), 0 0 50px rgba(0,255,136,0.3); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes scan-line {
+  0%   { top: -2px; }
+  100% { top: 100%; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes data-flow {
+  0%   { opacity: 0; transform: translateY(-10px); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes border-rotate {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* ── Input Focus Styles ────────────────────────────────────────────────────── */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+}
+
+/* ── Recharts Tooltip Override ─────────────────────────────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: rgba(10,15,10,0.95) !important;
+  border-color: rgba(0,255,136,0.3) !important;
+  border-radius: 8px !important;
+}
+
+/* ── React Circular Progressbar override ───────────────────────────────────── */
+.CircularProgressbar .CircularProgressbar-path {
+  filter: drop-shadow(0 0 6px currentColor);
+}
