@@ -38,7 +38,6 @@ allowed_origins = [
     "http://localhost:3000",
 ]
 
-# Append any custom origins defined in environment variables
 env_origins = os.getenv("CORS_ORIGINS", "")
 if env_origins:
     allowed_origins.extend([origin.strip() for origin in env_origins.split(",") if origin.strip()])
@@ -49,4 +48,30 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)  # ← make sure this closing ) is there
+)
+
+# 4. Import & Mount Routers
+from routers import crop, dosing, harvest, market, plant, sensor
+
+app.include_router(sensor.router, prefix="/api/sensor-data", tags=["Sensor Data"])
+app.include_router(crop.router, prefix="/api", tags=["Crop Intelligence"])
+app.include_router(dosing.router, prefix="/api", tags=["Dosing Decision"])
+app.include_router(plant.router, prefix="/api", tags=["Plant Health"])
+app.include_router(harvest.router, prefix="/api", tags=["Harvest Readiness"])
+app.include_router(market.router, prefix="/api", tags=["Market Price"])
+
+
+# 5. Root & Health Check Endpoints
+@app.get("/", tags=["Root"])
+def root():
+    return {
+        "app": "AgriGenome-Nexus",
+        "version": "1.0.0",
+        "status": "operational",
+        "docs": "/docs",
+    }
+
+
+@app.get("/health", tags=["Root"])
+def health_check():
+    return {"status": "healthy"}
