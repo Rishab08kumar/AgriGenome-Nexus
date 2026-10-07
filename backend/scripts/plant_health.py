@@ -44,4 +44,4 @@ def predict_plant_health(image_bytes: bytes):
 health_model = predict_plant_health
 
 if __name__ == "__main__":
-    print("✅ Plant health script executed without syntax errors!")th
+    print("✅ Plant health script executed without syntax errors!")

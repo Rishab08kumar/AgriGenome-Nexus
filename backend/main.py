@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
     from models.dosing_engine import engine
     from models.harvest_predictor import predictor
     from models.market_forecaster import forecaster
-    from models.plant_health import health_model
+    from scripts.plant_health import health_model
 
     print("✅ All models loaded successfully!")
     yield
@@ -45,34 +45,6 @@ if env_origins:
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Set to ["*"] for full cross-origin support across Vercel and local testing
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# 4. Import & Mount Routers
-from routers import crop, dosing, harvest, market, plant, sensor
-
-app.include_router(sensor.router, prefix="/api/sensor-data", tags=["Sensor Data"])
-app.include_router(crop.router, prefix="/api", tags=["Crop Intelligence"])
-app.include_router(dosing.router, prefix="/api", tags=["Dosing Decision"])
-app.include_router(plant.router, prefix="/api", tags=["Plant Health"])
-app.include_router(harvest.router, prefix="/api", tags=["Harvest Readiness"])
-app.include_router(market.router, prefix="/api", tags=["Market Price"])
-
-
-# 5. Root & Health Check Endpoints
-@app.get("/", tags=["Root"])
-def root():
-    return {
-        "app": "AgriGenome-Nexus",
-        "version": "1.0.0",
-        "status": "operational",
-        "docs": "/docs",
-    }
-
-
-@app.get("/health", tags=["Root"])
-def health_check():
-    return {"status": "healthy"}
