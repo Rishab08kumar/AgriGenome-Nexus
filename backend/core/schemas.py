@@ -3,17 +3,30 @@ from typing import Optional, List
 from datetime import datetime
 
 class SensorReading(BaseModel):
-    soil_moisture: float
-    humidity: float
-    temperature: float
-    light_intensity: float
-    nitrogen: float
-    phosphorus: float
-    potassium: float
-    ec: float
+    device_id: Optional[str] = "ESP32-SMART-001"
+    temperature: Optional[float] = None
+    humidity: Optional[float] = None
+    soil_raw: Optional[int] = None
+    soil_percent: Optional[float] = None
+    soil_dry: Optional[bool] = None
+    lux: Optional[float] = None
+    ldr_raw: Optional[int] = None
+    ads0: Optional[int] = None
+    ads1: Optional[int] = None
+    latitude: Optional[float] = 0.0
+    longitude: Optional[float] = 0.0
+    altitude: Optional[float] = 0.0
+    pump_status: Optional[bool] = False
+    crop: Optional[str] = "tomato"
+    timestamp: Optional[datetime] = Field(default_factory=datetime.utcnow)
+    soil_moisture: Optional[float] = None
+    light_intensity: Optional[float] = None
+    nitrogen: Optional[float] = None
+    phosphorus: Optional[float] = None
+    potassium: Optional[float] = None
+    ec: Optional[float] = None
     ph: Optional[float] = None
     weight: Optional[float] = None
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 class CropRecommendationInput(BaseModel):
     latitude: float
