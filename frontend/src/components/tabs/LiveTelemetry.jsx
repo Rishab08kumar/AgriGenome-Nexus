@@ -15,6 +15,12 @@ const LiveTelemetry = () => {
     return 'normal';
   };
 
+  // Round values to 1 decimal
+  const r = (val, fallback) => {
+    const v = parseFloat(val);
+    return isNaN(v) ? fallback : Math.round(v * 10) / 10;
+  };
+
   const Chart = ({ color }) => (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={mockChartData}>
@@ -44,15 +50,15 @@ const LiveTelemetry = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <SensorCard 
           title="Soil Moisture" 
-          value={sensorData?.moisture || "45"} 
+          value={r(sensorData?.soil_percent || sensorData?.soil_moisture, 45)} 
           unit="%" 
           icon={Droplets} 
-          status={getStatus(sensorData?.moisture || 45, [20, 30, 60, 80])}
+          status={getStatus(sensorData?.soil_percent || 45, [20, 30, 60, 80])}
           chart={<Chart color="#00ff88" />}
         />
         <SensorCard 
           title="Temperature" 
-          value={sensorData?.temperature || "28"} 
+          value={r(sensorData?.temperature, 28)} 
           unit="°C" 
           icon={Thermometer} 
           status={getStatus(sensorData?.temperature || 28, [10, 15, 30, 35])}
@@ -60,7 +66,7 @@ const LiveTelemetry = () => {
         />
         <SensorCard 
           title="Humidity" 
-          value={sensorData?.humidity || "62"} 
+          value={r(sensorData?.humidity, 62)} 
           unit="%" 
           icon={Wind} 
           status={getStatus(sensorData?.humidity || 62, [30, 40, 70, 85])}
@@ -68,15 +74,15 @@ const LiveTelemetry = () => {
         />
         <SensorCard 
           title="Light Intensity" 
-          value={sensorData?.light || "850"} 
+          value={r(sensorData?.lux || sensorData?.light_intensity, 14)} 
           unit="Lux" 
           icon={Sun} 
-          status={getStatus(sensorData?.light || 850, [200, 400, 1000, 1200])}
+          status={getStatus(sensorData?.lux || 14, [5, 10, 500, 1200])}
           chart={<Chart color="#ffd700" />}
         />
         <SensorCard 
           title="Nitrogen (N)" 
-          value={sensorData?.nitrogen || "120"} 
+          value={r(sensorData?.nitrogen, 120)} 
           unit="mg/kg" 
           icon={FlaskConical} 
           status={getStatus(sensorData?.nitrogen || 120, [50, 80, 150, 200])}
@@ -84,7 +90,7 @@ const LiveTelemetry = () => {
         />
         <SensorCard 
           title="Phosphorus (P)" 
-          value={sensorData?.phosphorus || "45"} 
+          value={r(sensorData?.phosphorus, 45)} 
           unit="mg/kg" 
           icon={FlaskConical} 
           status={getStatus(sensorData?.phosphorus || 45, [20, 30, 60, 80])}
@@ -92,7 +98,7 @@ const LiveTelemetry = () => {
         />
         <SensorCard 
           title="Electrical Conductivity" 
-          value={sensorData?.ec || "1.2"} 
+          value={r(sensorData?.ec, 1.2)} 
           unit="mS/cm" 
           icon={Zap} 
           status={getStatus(sensorData?.ec || 1.2, [0.5, 0.8, 1.5, 2.0])}
