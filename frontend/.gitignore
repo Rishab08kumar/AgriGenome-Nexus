@@ -1,3 +1,16 @@
 node_modules
 .vite
 dist-
+# Python temporary files
+__pycache__/
+*.pyc
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+firebase_creds.json
+*firebase-adminsdk*.json
+
+# Frontend dependencies
+node_modules/
